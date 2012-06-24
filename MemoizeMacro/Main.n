@@ -1,0 +1,40 @@
+﻿using Nemerle;
+using MemoizeMacroMacro;
+
+using System.Console;
+
+module Program
+{
+   Main() : void
+   {
+      def n = 5;
+      WriteLine("Non-memoized Fibonacci");
+      WriteLine("First call");
+      WriteLine(Fib(n));
+      WriteLine("Second call");
+      WriteLine(Fib(n));
+      WriteLine("----------");
+      WriteLine("Memoized Fibonacci");
+      WriteLine("First call");
+      WriteLine(MemoizedFib(n));
+      WriteLine("Second call");
+      WriteLine(MemoizedFib(n));
+      Write("Press any key to continue...");
+      _ = ReadKey(true);
+   }
+   
+   Fib([Dump] n : int) : int
+   {
+      | 0 => 0;
+      | 1 => 1;
+      | _ => Fib(n - 1) + Fib(n - 2);
+   }
+   
+   [Memoize]
+   MemoizedFib([Dump] n : int) : int
+   {
+      | 0 => 0;
+      | 1 => 1;
+      | _ => MemoizedFib(n - 1) + MemoizedFib(n - 2);
+   }
+}
